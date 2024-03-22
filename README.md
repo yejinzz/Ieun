@@ -77,7 +77,6 @@
  - Order
  - OrderSell
  - 검색기능
- - 기술 문서 작성 (notion, google sheet) 및 디자인
 
 <br>
  
