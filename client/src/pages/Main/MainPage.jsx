@@ -4,20 +4,25 @@ import Lenis from "@studio-freight/lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Loading from "../../Loading";
-import ProfileDropdown from "../../components/Header/dropdown/ProfileDropdown";
+import ProfileDropdown from "../../components/Header/DropDown/ProfileDropdown";
 import List from "../../components/Main/List";
 import Banner from "../../components/Main/Banner";
 import Footer from "../../components/Main/Footer";
-import styled from "styled-components";
-import SideBarModal from "../../components/Header/SideBarModal";
+import * as S from "./MainPage.styled";
+import SideBarModal from "../../components/Header/SideBar/SideBarModal";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import { MAIN_MAGAZINE_LIST_ATT } from "../../constants/attribute";
+import { MAIN_MAGAZINE_LIST_ATT } from "../../datas/attribute";
+import Logo from "../../components/common/Logo";
+import MobileSwiper from "../../components/Main/MobileSwiper/MobileSwiper";
+import useSmoothScroll from "../../hooks/useSmoothScroll";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const MainPage = () => {
-  const [nowloding, setNowloding] = useState(false);
+  const [nowLoading, setNowLoading] = useState(false);
   const [data, setData] = useState([]);
   const horwrapRef = useRef(null);
 
@@ -31,11 +36,15 @@ const MainPage = () => {
     axiosInstance({
       url: "/upcyclings/descending?page=1&size=4",
       method: "get",
-    }).then((response) => {
-      setData(response.data.data);
-    });
+    })
+      .then((response) => {
+        setData(response.data.data);
+      })
+      .catch((err) => {
+        setData([]);
+      });
 
-    setNowloding(true);
+    setNowLoading(true);
   }, []);
 
   useEffect(() => {
@@ -47,75 +56,57 @@ const MainPage = () => {
         duration: 3,
         scrollTrigger: {
           trigger: horwrapRef.current,
-          // start: "top center",
+          start: "top top",
           end: `+=${horwrapWidth}`,
           scrub: window.innerWidth > 768 ? 0.5 : 0,
           pin: window.innerWidth > 768 ? horwrapRef.current : false,
         },
       });
     }
-    setNowloding(true);
-  }, [nowloding, horwrapRef.current]);
+    setNowLoading(true);
+  }, [nowLoading, horwrapRef.current]);
 
-  gsap.registerPlugin(ScrollTrigger);
-  const lenis = new Lenis();
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
+  // const lenis = new Lenis();
+  // function raf(time) {
+  //   lenis.raf(time);
+  //   requestAnimationFrame(raf);
+  // }
+  // requestAnimationFrame(raf);
+  useSmoothScroll();
 
   return (
     <>
-      {nowloding ? (
+      {nowLoading ? (
         <div>
-          <Header>
+          <S.MainHeader>
             <SideBarModal />
-            <Logo>
-              <LogoImg
+            <S.LogoWrap>
+              <S.LogoImg
                 src={process.env.PUBLIC_URL + "/image/logo3.png"}
                 alt="로고"
               />
-              <LogoImg
+              <Logo
                 src={process.env.PUBLIC_URL + "/image/logo2.png"}
                 alt="로고"
               />
-            </Logo>
+            </S.LogoWrap>
             <ProfileDropdown />
-          </Header>
+          </S.MainHeader>
 
-          <Main>
+          <S.Main>
             {/* 반응형 배너 캐러셀 적용 */}
-            {window.innerWidth <= 768 ? (
-              <CustomSwiper
-                pagination={true}
-                modules={[Pagination]}
-                autoHeight={true}
-              >
-                <SwiperSlide>
-                  <Banner
-                    link="/about"
-                    img="/image/banner1.webp"
-                    order="first"
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <Banner link="/funding" img="/image/banner2.webp" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <Banner link="/store" img="/image/banner3.webp" />
-                </SwiperSlide>
-              </CustomSwiper>
-            ) : (
-              <Horwrap className="horwrap" ref={horwrapRef}>
+            {window.innerWidth > 768 ? (
+              <S.Horwrap className="horwrap" ref={horwrapRef}>
                 <Banner link="/about" img="/image/banner1.webp" order="first" />
                 <Banner link="/funding" img="/image/banner2.webp" />
                 <Banner link="/store" img="/image/banner3.webp" />
-              </Horwrap>
+              </S.Horwrap>
+            ) : (
+              <MobileSwiper />
             )}
-            <ContentsFrame>
-              <H1>Magazine</H1>
-              <Contentslist>
+            <S.ContentsFrame>
+              <h1>Magazine</h1>
+              <S.Contentslist>
                 {MAIN_MAGAZINE_LIST_ATT.map((list, index) => (
                   <List
                     key={index}
@@ -126,19 +117,19 @@ const MainPage = () => {
                     footer={list.footer}
                   />
                 ))}
-              </Contentslist>
-              <H1>Funding</H1>
+              </S.Contentslist>
+              <h1>Funding</h1>
               {data.length > 3 ? (
-                <Contentslist>
+                <S.Contentslist>
                   {data.slice(0, 4).map((item, index) => (
                     <div key={index}>
                       <List {...item} />
                     </div>
                   ))}
-                </Contentslist>
+                </S.Contentslist>
               ) : null}
-            </ContentsFrame>
-          </Main>
+            </S.ContentsFrame>
+          </S.Main>
           <Footer />
         </div>
       ) : (
@@ -149,88 +140,3 @@ const MainPage = () => {
 };
 
 export default MainPage;
-
-//styled-components
-
-const CustomSwiper = styled(Swiper)`
-  .swiper-slide {
-    margin-top: 7rem;
-  }
-  .swiper-pagination-bullet-active {
-    background: var(--color-main);
-  }
-`;
-
-const Header = styled.div`
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 70px;
-  z-index: 90;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: transparent;
-  padding: 0 30px;
-  padding-top: 30px;
-`;
-
-const Logo = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LogoImg = styled.img`
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
-`;
-
-const Main = styled.div`
-  background-color: #f5f5f5;
-  margin-bottom: 100vh;
-  overflow: hidden;
-`;
-
-const Horwrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 200vw;
-
-  background-color: #f5f5f5;
-  height: 100%;
-  @media (max-width: 768px) {
-    width: 100vw;
-  }
-`;
-
-const ContentsFrame = styled.div`
-  padding: 5rem;
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
-`;
-
-const Contentslist = styled.div`
-  display: grid;
-  width: 100%;
-  gap: 3rem;
-  grid-template-columns: repeat(4, 1fr);
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-  @media (max-width: 425px) {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-`;
-
-const H1 = styled.h1`
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #639443;
-`;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Pagination } from "@mui/material";
 
 // Details
 export const DetailsContainer = styled.div`
@@ -66,4 +67,19 @@ export const EmptyText = styled.p`
   color: #767676;
   text-align: center;
   border-bottom: none;
+`;
+
+export const CustomPagination = styled(Pagination)`
+  .MuiPagination-ul {
+    margin-top: 1rem;
+    justify-content: center;
+    .Mui-selected {
+      background-color: var(--color-main);
+      color: #fff;
+
+      &:hover {
+        background-color: var(--color-main-80);
+      }
+    }
+  }
 `;

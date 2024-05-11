@@ -6,20 +6,18 @@ const Banner = ({ order, link, img }) => {
     <Hor>
       <Link to={link}>
         {order === "first" ? (
-          <>
-            <FirstBanner>
-              <img
-                src={process.env.PUBLIC_URL + img}
-                alt="banner"
-                loading="lazy"
-              />
-              <div className="paragraph">
-                <p className="sub-content">숨어있는 것들로 세상을 이롭게</p>
-                <p>··</p>
-                <p>利隱</p>
-              </div>
-            </FirstBanner>
-          </>
+          <FirstBanner>
+            <img
+              src={process.env.PUBLIC_URL + img}
+              alt="banner"
+              loading="lazy"
+            />
+            <div className="paragraph">
+              <p className="sub-content">숨어있는 것들로 세상을 이롭게</p>
+              <p>··</p>
+              <p>利隱</p>
+            </div>
+          </FirstBanner>
         ) : (
           <OtherBanner>
             <img

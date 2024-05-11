@@ -1,22 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "./Details.styled";
-import { Pagination } from "@mui/material";
-import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { detailsInfo } from "../../../constants/detailsInfo";
 
 const Details = ({ details, currentPage, setCurrentPage }) => {
   const { path } = useParams();
-  const totalCategoryData = details[path];
+  const totalCategoryData = details?.[path];
   const { detail } = totalCategoryData;
 
-  const currentCategory = detailsInfo[path];
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  const LAST_PAGE =
-    detail.length % 10 === 0
-      ? parseInt(detail.length / 10)
-      : parseInt(detail.length / 10) + 1;
+  const LAST_PAGE = Math.ceil(detail.length / 10);
 
   const handlePageChange = (e) => {
     setCurrentPage(Number(e.target.outerText));
@@ -29,43 +20,40 @@ const Details = ({ details, currentPage, setCurrentPage }) => {
           src={`${process.env.PUBLIC_URL}/image/logo1.png`}
           alt="cartegory-title-icon"
         />
-        <S.DetailsTitleText>{currentCategory.title}</S.DetailsTitleText>
+        <S.DetailsTitleText>{totalCategoryData.title}</S.DetailsTitleText>
       </S.DetailsTitle>
-      <S.DetailsTable>
-        {currentCategory.tableHeader.length > 0 && (
-          <>
-            <thead>
-              <tr>
-                {currentCategory.tableHeader.map((text, index) => (
-                  <th key={index}>{text}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {detail.length > 0 ? (
-                detail
-                  .slice(10 * (currentPage - 1), 10 * currentPage)
 
-                  .map((data, Index) => (
-                    <tr key={Index}>
-                      {Object.keys(data).map((key, keyIndex) => (
-                        <td key={keyIndex}>{data[key]}</td>
-                      ))}
-                    </tr>
-                  ))
-              ) : (
-                <tr>
-                  <td colSpan={currentCategory.tableHeader.length}>
-                    내역이 없습니다.
-                  </td>
+      <S.DetailsTable>
+        <thead>
+          <tr>
+            {totalCategoryData.tableHeader.map((text, idx) => (
+              <th key={idx}>{text}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {detail.length > 0 ? (
+            detail
+              .slice(10 * (currentPage - 1), 10 * currentPage)
+              .map((data, idx) => (
+                <tr key={idx}>
+                  {Object.keys(data).map((key, keyIdx) => (
+                    <td key={keyIdx}>{data[key]}</td>
+                  ))}
                 </tr>
-              )}
-            </tbody>
-          </>
-        )}
+              ))
+          ) : (
+            <tr>
+              <td colSpan={totalCategoryData.tableHeader.length}>
+                내역이 없습니다.
+              </td>
+            </tr>
+          )}
+        </tbody>
       </S.DetailsTable>
+
       {detail.length > 0 && (
-        <CustomPagination
+        <S.CustomPagination
           page={currentPage}
           count={LAST_PAGE}
           onChange={handlePageChange}
@@ -77,17 +65,3 @@ const Details = ({ details, currentPage, setCurrentPage }) => {
 };
 
 export default Details;
-const CustomPagination = styled(Pagination)`
-  .MuiPagination-ul {
-    margin-top: 1rem;
-    justify-content: center;
-    .Mui-selected {
-      background-color: var(--color-main);
-      color: #fff;
-
-      &:hover {
-        background-color: var(--color-main-80);
-      }
-    }
-  }
-`;

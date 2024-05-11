@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import Logo from "../common/Logo";
-import ProfileDropdown from "./dropdown/ProfileDropdown";
+import ProfileDropdown from "./DropDown/ProfileDropdown";
 import * as S from "./Header.styled";
 import SearchBar from "./SearchBar/SearchBar";
-import SideBarModal from "./SideBarModal";
+import SideBarModal from "./SideBar/SideBarModal";
 import { memo } from "react";
 
 const Header = ({ pathname }) => {
