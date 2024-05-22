@@ -7,7 +7,7 @@ const List = (props) => {
       {props.upcyclingId ? (
         <ListLink to={`/fundingdetail/${props.upcyclingId}`}>
           <Contentsbox>
-            <ContentsImg src={props.thumbNailImage} alt="img" />
+            <ContentsImg src={props.thumbNailImage} alt="img" loading="lazy" />
             <ContentsText>{props.title}</ContentsText>
             <ContentsSub>{props.content}</ContentsSub>
             <ContentsFooter>{`@${props.displayName}`}</ContentsFooter>

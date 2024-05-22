@@ -25,8 +25,7 @@ const ImgUploader = ({ onChange, purpose = "", ...att }) => {
       return;
     }
     const file = e.target.files[0]; // 선택된 파일
-    const reader = new FileReader(); // 파일을 읽기 위한 FileReader 객체 생성
-    const formData = new FormData(); // 파일 데이터를 담을 FormData 객체 생성
+
     setFileName(file.name);
 
     if (file.size > 1 * 1024 * 1024) {
@@ -35,7 +34,10 @@ const ImgUploader = ({ onChange, purpose = "", ...att }) => {
       return;
     }
 
+    const reader = new FileReader(); // 파일을 읽기 위한 FileReader 객체 생성
     reader.readAsDataURL(file);
+
+    const formData = new FormData(); // 파일 데이터를 담을 FormData 객체 생성
     formData.append("file", file);
 
     try {

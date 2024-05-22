@@ -9,20 +9,29 @@ import Loading from "./Loading";
 import PublicRoute from "./pages/PublicRoute";
 const MainPage = lazy(() => import("./pages/Main/MainPage"));
 const UserSelectionPage = lazy(() =>
-  import("./pages/SignupPage/UserSelectionPage")
+  import("./pages/Signup/UserSelectionPage")
 );
-const SignupPage = lazy(() => import("./pages/SignupPage/SignupPage"));
-const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-const StorePage = lazy(() => import("./pages/Store/StorePage"));
-const StoreDetail = lazy(() => import("./pages/Store/StoreDetail"));
+const SignupPage = lazy(() => import("./pages/Signup/SignupPage"));
+const LoginPage = lazy(() => import("./pages/Login/LoginPage"));
+
 const FundingPage = lazy(() => import("./pages/Funding/FundingPage"));
-const FundingDetail = lazy(() => import("./pages/Funding/FundingDetail"));
-const FundingCreatePage = lazy(() =>
-  import("./pages/Funding/FundingCreatePage")
+const FundingDetail = lazy(() =>
+  import("./pages/Funding/DetailPage/FundingDetail")
 );
-const FundingEditPage = lazy(() => import("./pages/Funding/FundingEditPage"));
-const StoreCreatePage = lazy(() => import("./pages/Store/StoreCreatePage"));
-const StoreEditPage = lazy(() => import("./pages/Store/StoreEditPage"));
+const FundingCreatePage = lazy(() =>
+  import("./pages/Funding/CreatePage/FundingCreatePage")
+);
+const FundingEditPage = lazy(() =>
+  import("./pages/Funding/EditPage/FundingEditPage")
+);
+const StorePage = lazy(() => import("./pages/Store/StorePage"));
+const StoreDetail = lazy(() => import("./pages/Store/DetailPage/StoreDetail"));
+const StoreCreatePage = lazy(() =>
+  import("./pages/Store/CreatePage/StoreCreatePage")
+);
+const StoreEditPage = lazy(() =>
+  import("./pages/Store/EditPage/StoreEditPage")
+);
 const MyPage = lazy(() => import("./pages/MyPage/MyPage"));
 const AboutPage = lazy(() => import("./pages/About/AboutPage"));
 
@@ -53,8 +62,8 @@ const App = () => {
             <Route element={<FundingPage />} path="/funding" />
             <Route element={<FundingDetail />} path="/fundingdetail/:id" />
             <Route element={<AboutPage />} path="/about" />
+            <Route element={<MyPage />} path="/mypage/:path" />
             <Route element={<PrivateRoute />}>
-              <Route element={<MyPage />} path="/mypage/:path" />
               <Route element={<FundingCreatePage />} path="/fundingcreate" />
               <Route element={<FundingEditPage />} path="/fundingedit/*" />
               <Route element={<StoreCreatePage />} path="/storecreate" />
