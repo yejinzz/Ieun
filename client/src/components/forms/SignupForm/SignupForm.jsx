@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import useInputs from "../../../hooks/useInputs";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../common/Button";
@@ -117,7 +117,7 @@ const SignupForm = () => {
   return (
     <S.SignupFormContainer onSubmit={createAccount}>
       <S.InputFieldBox>
-        <div className="Signup__email_field">
+        <div className="signup__email_field">
           <Input
             variant="primary"
             label="이메일"
@@ -125,7 +125,7 @@ const SignupForm = () => {
             placeholder="이메일을 입력하세요."
             name="email"
             onChange={handleInputChange}
-            errMsg={errMsgObj.email}
+            // errMsg={errMsgObj.email}
             color="#fff"
           />
           <Button type="button" onClick={sendAuthCode}>
@@ -139,7 +139,9 @@ const SignupForm = () => {
             )}
           </Button>
         </div>
+        <p>{errMsgObj.email && errMsgObj.email}</p>
       </S.InputFieldBox>
+
       {isAuthCodeSent && (
         <S.InputFieldBox>
           <div className="Signup__flex-row">

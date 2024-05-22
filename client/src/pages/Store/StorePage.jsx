@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Lenis from "@studio-freight/lenis";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { axiosInstance } from "../../api/axiosInstance";
 import SideBar from "../../components/SubPage/SideBar";
@@ -7,6 +6,7 @@ import SortButton from "../../components/SubPage/SortButton";
 import Item from "../../components/SubPage/Store/Item";
 import { getUserData } from "../../api/getDatas";
 import * as S from "./StorePage.styled";
+import useSmoothScroll from "../../hooks/useSmoothScroll";
 
 const StorePage = () => {
   const userData = useSelector((state) => state.userData);
@@ -140,12 +140,19 @@ const StorePage = () => {
     }
   }, [page]);
 
-  const lenis = new Lenis();
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
+  // useEffect(() => {
+  //   fetch("/sell.json")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       setStoreList(data);
+  //     })
+  //     .catch((err) => {
+  //       setStoreList([]);
+  //     });
+  // }, []);
+
+  useSmoothScroll();
 
   return (
     <S.Container>

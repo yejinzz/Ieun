@@ -5,6 +5,7 @@ export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  overflow-y: hidden;
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -75,7 +76,6 @@ export const Sidelist = styled.nav`
 `;
 
 export const TeamName = styled.p`
-  font-family: "Montserrat", sans-serif;
   position: absolute;
   bottom: 50px;
   font-size: 1.5rem;

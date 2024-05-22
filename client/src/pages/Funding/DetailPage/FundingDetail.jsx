@@ -160,11 +160,14 @@ const MaterierBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background-color: rgb(249, 250, 251);
+  background-color: rgb(244, 244, 244);
   border-radius: 5px;
   padding: 1rem;
   & > p {
     font-size: 12px;
+    strong {
+      font-weight: 500;
+    }
   }
 `;
 const RightArea = styled.div`
@@ -178,7 +181,8 @@ const RightArea = styled.div`
 
 const MaterierGroup = styled.div`
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  gap: 1rem;
   /* margin: 20px 0; */
 `;
 
@@ -231,6 +235,7 @@ const Userprofile = styled.img`
 `;
 
 const Upcycler = styled.div`
+  font-weight: 400;
   margin-left: 10px;
 `;
 
@@ -264,9 +269,11 @@ const Button = styled.button`
 
 const Subbox = styled.div`
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; */
+  justify-content: flex-end;
+  margin-top: 10px;
 `;
 
 const ViewCount = styled.div`
@@ -276,12 +283,12 @@ const ViewCount = styled.div`
 const Title = styled.div`
   width: 100%;
   height: 50px;
-  font-size: 17px;
+  /* font-size: 17px; */
+  /* font-weight: bold; */
+  font-weight: 400;
   resize: none;
-  font-family: Arial, Helvetica, sans-serif;
   white-space: pre-line;
   word-break: break-all;
-  margin-bottom: 10px;
 `;
 
 const WrapperTitle = styled.div`
@@ -300,14 +307,17 @@ const WrapperText = styled.div`
 
 const IntroduceBox = styled.div`
   width: 100%;
-  height: 300px;
-  font-size: 14px;
+  height: 359px;
+  font-size: 13px;
   margin-top: 5px;
-  margin-bottom: 25px;
-  font-family: Arial, Helvetica, sans-serif;
+
   resize: none;
   white-space: pre-line;
   word-break: break-all;
+  @media (max-width: 768px) {
+    height: 100%;
+    margin-bottom: 50px;
+  }
 `;
 
 const AmountBox = styled.div`

@@ -7,11 +7,7 @@ const Banner = ({ order, link, img }) => {
       <Link to={link}>
         {order === "first" ? (
           <FirstBanner>
-            <img
-              src={process.env.PUBLIC_URL + img}
-              alt="banner"
-              loading="lazy"
-            />
+            <img src={process.env.PUBLIC_URL + img} alt={img} />
             <div className="paragraph">
               <p className="sub-content">숨어있는 것들로 세상을 이롭게</p>
               <p>··</p>
@@ -20,11 +16,7 @@ const Banner = ({ order, link, img }) => {
           </FirstBanner>
         ) : (
           <OtherBanner>
-            <img
-              src={process.env.PUBLIC_URL + img}
-              alt="banner"
-              loading="lazy"
-            />
+            <img src={process.env.PUBLIC_URL + img} alt={img} />
             {order === "second" ? (
               <div className="caption">
                 <strong>

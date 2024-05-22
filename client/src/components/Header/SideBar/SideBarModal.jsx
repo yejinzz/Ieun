@@ -15,7 +15,7 @@ const SideBarModal = () => {
 
   return (
     <>
-      <S.MenuBtn aria-label="menu-button" className="SideBar__Menu-btn">
+      <S.MenuBtn aria-label="menu" className="SideBar__Menu-btn">
         <MenuIcon onClick={openModal} />
       </S.MenuBtn>
       {isOpenModal ? (

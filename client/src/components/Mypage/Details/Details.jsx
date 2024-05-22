@@ -1,14 +1,17 @@
-import React from "react";
 import * as S from "./Details.styled";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Details = ({ details, currentPage, setCurrentPage }) => {
+  // 현재 활성화된 카테고리 타이틀
+  const currentTitle = useSelector((state) => state.details.currentTitle);
+
   const { path } = useParams();
   const totalCategoryData = details?.[path];
   const { detail } = totalCategoryData;
 
+  // 페이지네이션
   const LAST_PAGE = Math.ceil(detail.length / 10);
-
   const handlePageChange = (e) => {
     setCurrentPage(Number(e.target.outerText));
   };
@@ -20,7 +23,7 @@ const Details = ({ details, currentPage, setCurrentPage }) => {
           src={`${process.env.PUBLIC_URL}/image/logo1.png`}
           alt="cartegory-title-icon"
         />
-        <S.DetailsTitleText>{totalCategoryData.title}</S.DetailsTitleText>
+        <S.DetailsTitleText>{currentTitle}</S.DetailsTitleText>
       </S.DetailsTitle>
 
       <S.DetailsTable>

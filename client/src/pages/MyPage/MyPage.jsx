@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EditModal from "../../components/Mypage/EditModal/EditModal";
 import Details from "../../components/Mypage/Details/Details";
 import UserProfile from "../../components/Mypage/UserProfile/UserProfile";
@@ -10,7 +10,7 @@ import styled from "styled-components";
 import useModal from "../../hooks/useModal";
 import useCategoryDetails from "../../hooks/useCategoryDetails";
 import Category from "../../components/Mypage/Category/Category";
-import { userDetailsActions } from "../../store/slice/userDetailsSlice";
+import { setTitle } from "../../store/slice/detailsSlice";
 import { useGetMemberId } from "../../hooks/useGetMemberId";
 
 const MyPage = () => {
@@ -19,6 +19,7 @@ const MyPage = () => {
   const { path } = useParams();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
+  const currentCategory = useSelector((state) => state.details.currentCategory);
 
   const { getMemberId } = useGetMemberId();
   const { isOpenModal, isUnmount, openModal, closeModal } = useModal();
@@ -40,24 +41,19 @@ const MyPage = () => {
         );
       });
 
-      dispatch(userDetailsActions.setTitle(details[path].title));
+      dispatch(setTitle(details[path].title));
       getDetailDatas(userData.memberId, path).then((res) => {
         setCategoryDetails(path, res.data.data);
       });
     }
-  }, [userData.memberId]);
+  }, [userData.memberId, currentCategory]);
 
   return (
     <>
       <MyPageContainer>
         <div>
           <UserProfile openModal={openModal} />
-          <Category
-            userData={userData}
-            setCategoryDetails={setCategoryDetails}
-            currentCategory={path}
-            setCurrentPage={setCurrentPage}
-          />
+          <Category userData={userData} setCurrentPage={setCurrentPage} />
         </div>
         <Details
           details={details}

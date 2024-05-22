@@ -1,12 +1,10 @@
-// import useScrollLock from "./useScrollLock";
 import { useState } from "react";
-import { lockScroll, activeScroll } from "../utils/scrollControl";
 const useModal = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isUnmount, setIsUnmount] = useState(true);
 
   const openModal = () => {
-    lockScroll();
+    // lockScroll();
     setIsUnmount(false);
     setIsOpenModal(true);
   };
@@ -14,7 +12,7 @@ const useModal = () => {
   const closeModal = () => {
     setIsUnmount(true);
     setTimeout(() => {
-      activeScroll();
+      // activeScroll();
       setIsOpenModal(false);
     }, 1200);
   };

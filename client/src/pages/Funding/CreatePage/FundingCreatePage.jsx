@@ -1,15 +1,15 @@
+import * as S from "./FundingCreatePage.styeld";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Button from "../../../components/common/Button";
 import useInputs from "../../../hooks/useInputs";
-import * as S from "./FundingCreatePage.styeld";
 import { createFundingPost } from "../../../api/postApi";
 import CreateFormSection from "../../../components/create/CreateFormSection";
 import useErrHandler from "../../../hooks/useErrHandler";
 import { FUNDING_INPUT_ATT } from "../../../datas/attribute";
 import { FUNDING_TIPS } from "../../../datas/tips";
 import { isEmpty, validationsPost } from "../../../utils/validateInput";
-import React, { useCallback } from "react";
 
 const FundingCreatePage = () => {
   const { handleValidation, errMsgObj } = useErrHandler();

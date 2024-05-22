@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { axiosInstance } from "../../api/axiosInstance";
-import Lenis from "@studio-freight/lenis";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Loading from "../../Loading";
@@ -10,14 +8,11 @@ import Banner from "../../components/Main/Banner";
 import Footer from "../../components/Main/Footer";
 import * as S from "./MainPage.styled";
 import SideBarModal from "../../components/Header/SideBar/SideBarModal";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
 import { MAIN_MAGAZINE_LIST_ATT } from "../../datas/attribute";
 import Logo from "../../components/common/Logo";
 import MobileSwiper from "../../components/Main/MobileSwiper/MobileSwiper";
 import useSmoothScroll from "../../hooks/useSmoothScroll";
+import { axiosInstance } from "../../api/axiosInstance";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,27 +46,23 @@ const MainPage = () => {
     if (horwrapRef.current) {
       const horwrapWidth = horwrapRef.current.offsetWidth;
 
-      gsap.to(horwrapRef.current, {
-        xPercent: -100,
-        duration: 3,
-        scrollTrigger: {
-          trigger: horwrapRef.current,
-          start: "top top",
-          end: `+=${horwrapWidth}`,
-          scrub: window.innerWidth > 768 ? 0.5 : 0,
-          pin: window.innerWidth > 768 ? horwrapRef.current : false,
-        },
+      requestAnimationFrame(() => {
+        gsap.to(horwrapRef.current, {
+          xPercent: -100,
+          duration: 3,
+          scrollTrigger: {
+            trigger: horwrapRef.current,
+            start: "top top",
+            end: `+=${horwrapWidth}`,
+            scrub: window.innerWidth > 768 ? 0.5 : 0,
+            pin: window.innerWidth > 768 ? horwrapRef.current : false,
+          },
+        });
       });
     }
     setNowLoading(true);
   }, [nowLoading, horwrapRef.current]);
 
-  // const lenis = new Lenis();
-  // function raf(time) {
-  //   lenis.raf(time);
-  //   requestAnimationFrame(raf);
-  // }
-  // requestAnimationFrame(raf);
   useSmoothScroll();
 
   return (
@@ -97,9 +88,13 @@ const MainPage = () => {
             {/* 반응형 배너 캐러셀 적용 */}
             {window.innerWidth > 768 ? (
               <S.Horwrap className="horwrap" ref={horwrapRef}>
-                <Banner link="/about" img="/image/banner1.webp" order="first" />
-                <Banner link="/funding" img="/image/banner2.webp" />
-                <Banner link="/store" img="/image/banner3.webp" />
+                <Banner
+                  link="/about"
+                  img="/image/default_banner.webp"
+                  order="first"
+                />
+                <Banner link="/funding" img="/image/funding_banner.webp" />
+                <Banner link="/store" img="/image/store_banner.webp" />
               </S.Horwrap>
             ) : (
               <MobileSwiper />

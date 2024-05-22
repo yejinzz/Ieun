@@ -33,6 +33,14 @@ const ThumbnailImg = styled.img`
   width: 100%;
   object-fit: cover;
   border-radius: 10px;
+  @media (max-width: 768px) {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    object-fit: contain;
+    /* gap: 2rem; */
+    margin-top: 0px;
+  }
 `;
 
 export { MaxWidthContainer, GridWrapper, ThumbnailImg };

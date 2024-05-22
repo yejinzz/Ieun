@@ -1,11 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
 export const LoadingSpiner = () => {
-  return (
-    <>
-      <LoadingSpinner />
-    </>
-  );
+  return <LoadingSpinner />;
 };
 
 const spin = keyframes`
@@ -23,6 +19,5 @@ const LoadingSpinner = styled.div`
   border: 1.5px solid rgb(198, 198, 198);
   border-top: 1.5px solid rgb(255, 255, 255);
   border-radius: 50%;
-
-  animation: ${spin} 1s linear infinite; // 키프레임 애니메이션 적용
+  animation: ${spin} 1s linear infinite;
 `;
