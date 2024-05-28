@@ -17,15 +17,14 @@ const ImgUploader = ({ onChange, purpose = "", ...att }) => {
       return null;
     }
   });
+  // 업로드 이미지 파일 이름
   const [fileName, setFileName] = useState("파일을 선택해 주세요.");
-  // const inputRef = useRef(null);
 
   const onUpload = async (e) => {
     if (!e.target.files) {
       return;
     }
     const file = e.target.files[0]; // 선택된 파일
-
     setFileName(file.name);
 
     if (file.size > 1 * 1024 * 1024) {
@@ -34,14 +33,22 @@ const ImgUploader = ({ onChange, purpose = "", ...att }) => {
       return;
     }
 
-    const reader = new FileReader(); // 파일을 읽기 위한 FileReader 객체 생성
-    reader.readAsDataURL(file);
+    try {
+      const previewSrc = await readFile(file);
+      setImgPreviewSrc(previewSrc);
+      const uploadedData = await uploadFile(file);
+      onChange({ target: { name: att.name, value: uploadedData } });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    const formData = new FormData(); // 파일 데이터를 담을 FormData 객체 생성
+  const uploadFile = async (file) => {
+    const formData = new FormData();
     formData.append("file", file);
 
     try {
-      await readerLoadPromise(reader);
+      // aws s3 이미지 업로드 후 cdn url 받기
       const response = await axiosInstance({
         url: "/upload",
         method: "POST",
@@ -50,18 +57,18 @@ const ImgUploader = ({ onChange, purpose = "", ...att }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      onChange({ target: { name: att.name, value: response.data } });
+      return response.data;
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
 
-  const readerLoadPromise = (reader) => {
+  const readFile = (file) => {
     return new Promise((resolve, reject) => {
-      reader.onload = () => {
-        setImgPreviewSrc(reader.result || null);
-        resolve();
-      };
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result || null);
       reader.onerror = () =>
         reject(new Error("파일을 읽는 도중 오류가 발생했습니다."));
     });
